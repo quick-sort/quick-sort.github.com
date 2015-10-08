@@ -1,0 +1,12 @@
+<h1 class="page-header"><a href="{{_p.url}}">{{ _p.title }}</a>
+	<br>
+	{% assign _date = _p.date %}
+	{% assign _author = _p.author %}
+	{% include templates/date_author_label %}
+</h1>
+<div class="lead">
+	{{ _p.excerpt |remove:"<p>"|remove:"</p>"}}<a href="{{ _p.url }}">...more</a>
+</div>
+
+{% include templates/post_categories %}
+{% include templates/post_tags %}

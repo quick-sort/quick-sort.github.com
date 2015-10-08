@@ -1,0 +1,10 @@
+{% if site.data.plugins.analytics.provider %}
+	{% case site.data.plugins.analytics.provider %}
+		{% when "google" %}
+			{% assign _provider = site.data.plugins.analytics.google %}
+ 			{% include plugins/analytics_providers/google %}
+        {% when "baidu" %}
+			{% assign _provider = site.data.plugins.analytics.baidu %}
+ 			{% include plugins/analytics_providers/baidu %}
+	{% endcase %}
+{% endif %}

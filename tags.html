@@ -1,0 +1,14 @@
+---
+layout: blog
+title: tag
+---
+{% for tag in site.tags %} 
+<h3 id="{{ forloop.index }}-ref">
+	<span class="label label-{%cycle 'default', 'primary', 'success', 'info', 'warning', 'danger'%}">{{ tag[0] |xml_escape}}<span class="badge">{{tag[1].size}}</span></span>
+</h3>
+<ul>
+	{% for post in tag[1] %}
+		<li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title |xml_escape}}</a></li>
+	{% endfor %}
+</ul>
+{% endfor %}

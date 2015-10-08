@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=1024" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>Introduction to Google Mesa</title>
+
+        <meta name="description" content="Mesa is a highly scalable analytic data warehousing system that stores critical measurement data related to Google’s Internet advertising business." />
+        <meta name="author" content="quick-sort" />
+
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+        <link href="/assets/slides/mesa/mesa.css" rel="stylesheet" />
+
+        <link rel="shortcut icon" href="/assets/images/favicon.png" />
+        <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
+    </head>
+
+    <body class="impress-not-supported">
+
+        <div class="fallback-message">
+            <p>Your browser <h1>doesn't support the features required</h1> by impress.js, so you are presented with a simplified version of this presentation.</p>
+            <p>For the best experience please use the latest <h1>Chrome</h1>, <h1>Safari</h1> or <h1>Firefox</h1> browser.</p>
+        </div>
+
+        <div id="impress-wapper">
+            <div id="impress">
+                <div class="step slide" data-z="1">
+                    <h1 class="title">Introduction to Google Mesa</h1>
+                </div>
+                <div class="step slide" data-z="2">
+                    <h1>What is Mesa?</h1>
+                    <ul>
+                        <li>Mesa is geo-replicated across multiple datacenters and provides consistent and repeatable query answers at low latency, even when an entire datacenter fails</li>
+                        <li>Mesa is designed to satisfy near real-time data ingestion and queryability, as well as high availability, reliability, fault tolerance, and scalability for large data and query volumes</li>
+                        <li>Mesa handles petabytes of data, processes millions of row updates per second, and serves billions of queries that fetch trillions of rows per day</li>
+                    </ul>
+
+                </div>
+
+                <div class="step slide" data-z="3">
+                    <h1>Why Mesa?</h1>
+                    <ul>
+                        <li>BigTable does not provide the necessary atomicity required by Mesa applications.</li>
+                        <li>Megastore/Spanner/F1 do provide strong consistency across geo-replicated data, they do not support the peak update throughput needed by clients of Mesa</li>
+                        <li>None of Google’s other in-house data solutions(BigTable, Megastore,Spanner,F1) can support the data size and update volume required to serve as a data warehousing platform supporting Google’s advertising business</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="4">
+                    <h1>What does Mesa provide?</h1>
+                    <ul>
+                        <li>Atomic Update</li>
+                        <li>Consistency and Correctness</li>
+                        <li>Availability</li>
+                        <li>New Real-Time Update Throughput</li>
+                        <li>Query Performance</li>
+                        <li>Scalability</li>
+                        <li>Online Data and Metadata Transformation</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="5">
+                    <h1>How can Mesa do it?</h1>
+                    <ul>
+                        <li>Storage System</li>
+                        <li>System Architecture</li>
+                        <li>Enchancements</li>
+                        <li>Metrics</li>
+                    </ul>
+                </div> 
+
+                <div class="step slide" data-z="6">
+                    <h1>Storage System</h1>
+                    <q>“How many ad clicks were there for a particular advertiser matching the keyword ‘decaf’ during the first week of October between 8:00am and 11:00am that were displayed on google.com for users in a specific geographic location using a mobile device?”</q>
+                </div> 
+
+                <div class="step slide" data-z="7">
+                    <h1>Data Model</h1>
+                    <q>Table schema specifies the key space K for the table and the corresponding value space V , where both K and V are sets</q>
+                    <img src="/assets/slides/mesa/images/1.png"/>
+                </div>
+
+                <div class="step slide" data-z="8">
+                    <h1>Aggregate Function for Each Value Column</h1>
+                    <q>F((x1,...,xk),(y1,...,yk)) = (f1(x1,y1),...,fk(xk,yk))</q>
+                    <ul>
+                        <li>Where (x1,...,xk),(y1,...,yk) ∈ V are any two tuples of column values, and f1 , . . . , fk are explicitly defined by the schema for each value column</li>
+                        <li>Must be associative. F(F(v0,v1),v2) = F(v0,F(v1,v2)) for any values v0 , v1 , v2 ∈ V</li>
+                        <li>Usually also commutative F(v0,v1) = F(v1,v0)</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="9">
+                    <h1>Updates</h1>
+                    <q>Mesa updates in batches</q>
+                    <img src="/assets/slides/mesa/images/2.png"/>
+                </div>
+
+                <div class="step slide" data-z="10">
+                    <h1>Query</h1>
+                    <ul>
+                        <li>A query to Mesa consists of a version number N and a predicate P on the key space</li>
+                        <li>The response contains one row for each key matching P that appears in some update with version between 0 and n. The value for a key in the response is the aggregate of all values for that key in those updates</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="11">
+                    <h1>Versioned Data Management</h1>
+                    <q>Versioned data plays a crucial role in both update and query processing in Mesa and presents multiple challenges:</q>
+                    <q>Mesa allows users to query at a particular version for only a limited time period (e.g., 24 hours)</q>
+                    <ul>
+                        <li>Storing each version independently is VERY expensive</li>
+                        <li>Going over all the versions and aggregating at query time is also VERY expensive</li>
+                        <li>Naive pre-aggregation on every update can be prohibitively expensive</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="12">
+                    <h1>Delta Version </h1>
+                    <q>Mesa pre-aggregates certain versioned data and stores it using deltas, each of which con- sists of a set of rows (with no repeated keys) and a delta version (or, more simply, a version), represented by [V1,V2], where V1 and V2 are update version numbers and V1 ≤ V2.</q>
+                    <img src="/assets/slides/mesa/images/3.png"/>
+                </div>
+                <div class="step slide" data-z="13">
+                    <h1>Cumulative Compaction</h1>
+                    <q>In order to support more efficient query processing, Mesa maintains a set of cumulative deltas D of the form [U,V] with B &lt; U &lt; V through a process called cumulative compaction.</q>
+                </div>
+                <div class="step slide" data-z="13">
+                    <h1>Delta Compaction Policy</h1>
+                    <ul>
+                        <li>what deltas (excluding the singleton) must be generated prior to allowing an update version to be queried (synchronously inside the update path, slowing down updates at the expense of faster queries)</li>
+                        <li>what deltas should be generated asynchronously outside of the update path</li>
+                        <li>when a delta can be deleted.</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="14">
+                    <h1>Mesa System Architecture</h1>
+                    <q>Mesa is built using BigTable and Colossus</q>
+                    <q>Two independent Subsystems:Update/maintenance and Querying</q>
+                    <q>All persis- tent metadata is stored in BigTable and all data files are stored in Colossus</q>
+                </div>
+
+                <div class="step slide" data-z="15">
+                    <h1>Update/Maintenance Subsystem</h1>
+                    <q>Controller/Worker framework(Single Instance)</q>
+                    <img src="/assets/slides/mesa/images/4.png"/>
+                </div>
+
+                <div class="step slide" data-z="16">
+                    <q>Multiple Instances</q>
+                    <img src="/assets/slides/mesa/images/6.png"/>
+                    <q>Mesa’s committer is responsible for coordinating updates across all Mesa instances worldwide, one version at a time</q>
+                </div>
+                <div class="step slide" data-z="17">
+                    <h1>Consistent Update Mechanism</h1>
+                    <q>Mesa’s controllers listen to the changes to the versions database to detect the availability of new updates, assign the corresponding work to update workers, and report successful incorporation of the update back to the versions database. The committer continuously evaluates if commit criteria are met (specifically, whether the update has been incorporated by a sufficient number of Mesa instances across multiple ge- ographical regions)</q>
+                </div>
+                <div class="step slide" data-z="18">
+                    <h1>Query Subsystem</h1>
+                    <q>On-the-Fly Aggregation</q>
+                    <img src="/assets/slides/mesa/images/5.png"/>
+                    <ul>
+                        <li>Limited query engine with basic support for server-side conditional filtering and “group by” aggregation</li>
+                        <li>Requiring workloads to be labeled appropriately</li>
+                    </ul>
+                </div>
+
+                <div class="step slide" data-z="19">
+                    <h1>Schema Changes in Mesa</h1>
+                    <q>A simple but expensive method that covers all cases</q>
+                    <ul>
+                        <li>Make a separate copy of the table with data stored in the new schema version at a fixed update version</li>
+                        <li>Replay any updates to the table generated in the meantime until the new schema version is current</li>
+                        <li>Switch the schema version used for new queries to the new schema version as an atomic controller BigTable metadata operation.</li>
+                    </ul>
+                </div>
+                <div class="step slide" data-z="20">
+                    <q>An optimized method that covers many important common cases</q>
+                    <q>Mesa performs a linked schema change to han- dle this case by treating the old and new schema versions as one for update/compaction. Specifically, Mesa makes the schema change visible to new queries immediately, handles conversion to the new schema version at query time on the fly (using a default value for the new column), and similarly writes all new deltas for the table in the new schema version</q>
+                </div>
+                <div class="step slide" data-z="21">
+                    <h1>Mitigating Data Corruption Problems</h1>
+                    <q>Online checks are done at every update and query operation</q>
+                    <ul>
+                        <li>When writing deltas, Mesa performs row ordering, key range, and aggregate value checks. violations result in a retry of the corresponding controller/worker operation</li>
+                        <li>When generating cumulative deltas, Mesa combines the key ranges and the aggregate values of the spanning deltas and checks whether they match the output delta</li>
+                        <li>Mesa’s sparse index and data files also store checksums for each row block, which Mesa verifies whenever a row block is read</li>
+                    </ul>
+                </div>
+                <div class="step slide" data-z="22">
+                    <q>Periodically Global Offline Checks</q>
+                    <ul>
+                        <li>Each Mesa instance computes a strong row-order-dependent checksum and a weak row-order-independent checksum for each index at a particular version, and a global component verifies that the table data is consistent across all indexes and instances</li>
+                        <li>Mesa also runs a global aggregate value checker that computes the spanning set of the most recently committed version of every index of a table in every Mesa instance, reads the aggregate values of those deltas from metadata, and aggregates them appropriately to verify consistency across all indexes and instances</li>
+                    </ul>
+                </div>
+                <div class="step slide" data-z="23">
+                    <q>When a table is corrupted, a Mesa instance can automatically reload an uncorrupted copy of the table from another instance, usually from a nearby datacenter. If all instances are corrupted, Mesa can restore an older version of the table from a backup and replay subsequent updates</q>
+                </div>
+                <div class="step slide" data-z="24">
+                    <h1>Metrics</h1>
+                    <img width="770" height="600" src="/assets/slides/mesa/images/7.png"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint">
+            <p>Use a spacebar or arrow keys to navigate</p>
+        </div>
+        <script>
+            if ("ontouchstart" in document.documentElement) { 
+                document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+            }
+        </script>
+
+        <script src="/assets/js/lib/impress.js"></script>
+        <script>impress().init();</script>
+
+    </body>
+</html>

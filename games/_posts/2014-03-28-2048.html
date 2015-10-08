@@ -1,0 +1,89 @@
+---
+layout: post 
+title: "2048 5*5朝代版"
+tags: ["游戏", "2048"]
+head: 
+- '<link rel="apple-touch-icon" href="/assets/games/2048/images/apple-touch-icon.png">'
+- '<meta name="HandheldFriendly" content="True">'
+- '<meta name="MobileOptimized" content="320">'
+- '<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">'
+- '<meta property="og:title" content="2048 game"/>'
+- '<meta property="og:site_name" content="2048 game"/>'
+- '<link href="/assets/games/2048/main.css" rel="stylesheet" type="text/css">'
+---
+<p class="game-explanation">
+	<strong class="important">规则:</strong> 使用 <strong>上下左右键</strong> 移动方块（触屏设备请直接滑动手指），相同的两个朝代合并后会变成 <strong>更新的一个</strong>。
+</p>
+
+<div class="game2048">
+	<div class="heading">
+		<h1 class="title">PRC</h1>
+		<div class="scores-container">
+			<div class="score-container">0</div>
+			<div class="best-container">0</div>
+		</div>
+	</div>
+	<p class="game-intro">合并方块，努力到达 <strong>PRC</strong> 时代吧！</p>
+	<div class="game-container">
+		<div class="game-message">
+			<p></p>
+			<div class="lower">
+				<a class="retry-button">Try again</a>
+				<div class="score-sharing"></div>
+			</div>
+		</div>
+
+		<div class="grid-container">
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+		</div>
+
+		<div class="tile-container">
+
+		</div>
+	</div>
+    <script src="/assets/games/2048/js/animframe_polyfill.js"></script>
+	<script src="/assets/games/2048/js/keyboard_input_manager.js"></script>
+	<script src="/assets/games/2048/js/html_actuator.js"></script>
+	<script src="/assets/games/2048/js/grid.js"></script>
+	<script src="/assets/games/2048/js/tile.js"></script>
+	<script src="/assets/games/2048/js/local_score_manager.js"></script>
+	<script src="/assets/games/2048/js/game_manager.js"></script>
+	<script src="/assets/games/2048/js/application.js"></script>
+
+	<img border="0" src="/assets/games/2048/images/131072.jpg" width="0" height="0">
+	<img border="0" src="/assets/games/2048/images/65536.jpg" width="0" height="0">
+</div>

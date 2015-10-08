@@ -1,0 +1,17 @@
+---
+layout: blog
+---
+{% assign _string_id = page.title %}
+{% include function/i18n %}
+<h1 class="page-header">{{ __string_value }}</h1>
+
+{% for category in site.categories %}
+	{% if category[0] == page.title %}
+		{% for post in category[1] %}
+			{% assign _p = post %}
+			{% include templates/post_excerpt %}
+		{% endfor %}
+		{% break %}
+	{% endif %}
+{% endfor %}
+

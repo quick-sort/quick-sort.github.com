@@ -1,0 +1,15 @@
+{% if _p.categories.size > 0 %}
+<div>
+	<span>{{site.data.i18n['category']}}:</span>
+	<span><a href="/{{_p.categories |join: '/'}}">
+	{% for category in _p.categories %}
+		{% assign _string_id = category %}
+		{% include function/i18n %}
+		{{__string_value}}
+		{% if forloop.last == false %}
+			&raquo;
+		{% endif %}
+	{% endfor %}
+	</a></span>
+</div>
+{% endif %}

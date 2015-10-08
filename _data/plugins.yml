@@ -1,0 +1,22 @@
+comments: 
+analytics:
+  provider: baidu
+  google: 
+    tracking_id: 'UA-42967195-1'
+    hostname: 'quicksort.cn'
+  baidu:
+    tracking_id: 0c52acbdb7936e8f3c910e4190050a18
+oauth: 
+sharing: 
+  provider: baidu
+  jiathis:
+    tracking_id: 1368785822425461
+  baidu:
+    tracking_id: 89860593
+search:
+  provider: google
+music:
+  provider: xiami
+  xiami:
+  qq: 
+  baidu: 

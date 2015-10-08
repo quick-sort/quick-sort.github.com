@@ -1,0 +1,12 @@
+announcement: "this is an announcement"
+weibo: "http://weibo.com/hilr"
+production_url : "http://quicksort.cn"
+title: QuickSort
+name: QuickSort
+author:
+  name: quicksort
+  email: "quicksort@outlook.com"
+meta:
+  - ["baidu-site-verification", "ONxhnaPTNO"]
+out_links: 
+  - ["http://miao123.net", "喵喵的部落格"]

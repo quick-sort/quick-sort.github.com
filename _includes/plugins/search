@@ -1,0 +1,8 @@
+{% if site.data.plugins.search.provider %}
+	{% case site.data.plugins.search.provider %}
+		{% when "google" %}
+ 			{% include plugins/search_providers/google %}
+        {% when "baidu" %}
+			{% include plugins/search_providers/baidu %}
+	{% endcase %}
+{% endif %}

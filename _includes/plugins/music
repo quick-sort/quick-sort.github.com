@@ -1,0 +1,13 @@
+{% if site.data.plugins.music.provider %}
+	{% case site.data.plugins.music.provider %}
+		{% when "xiami" %}
+			{% assign _xiami = site.data.plugins.music.xiami %}
+ 			{% include plugins/music_providers/xiami %}
+		{% when "baidu" %}
+			{% assign _baidu = site.data.plugins.music.baidu %}
+ 			{% include plugins/music_providers/baidu %}
+		{% when "qq" %}
+			{% assign _baidu = site.data.plugins.music.qq %}
+ 			{% include plugins/music_providers/qq %}
+	{% endcase %}
+{% endif %}

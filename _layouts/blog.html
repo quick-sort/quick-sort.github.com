@@ -1,0 +1,76 @@
+---
+layout: default
+---
+<div class="col-sm-8">
+    {{ content }}
+</div>
+<!-- sidebar -->
+<div class="col-sm-3 col-sm-offset-1">
+    <div class="sidebar-module sidebar-module-inset">
+        <a href="{{site.production_url}}/rss.xml" target="_blank"><img style="width:34px" src="{{site.image_prefix}}/feed_icon_128.png"></a>
+        {% if site.data.info.weibo %}
+        <a href="{{site.data.info.weibo}}" target="_blank"><img style="width:34px" src="{{site.image_prefix}}/weibo_icon_48.png"></a>
+        {% endif %}
+        {% if site.data.info.author.email %}
+        <a href="mailto:{{site.data.info.author.email}}" target="_blank"><img style="width:38px" src="{{site.image_prefix}}/gmail_icon_128.png"></a>
+        {% endif%}
+    </div>
+
+    <div class="sidebar-module" >
+        <h4>{{site.data.i18n['latest_articles']}}</h4>
+        <ol class="list-unstyled">
+            {% for post in site.posts limit:10 %}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ol>
+    </div>
+
+    <div class="sidebar-module" >
+        <h4>{{site.data.i18n['tag']}}</h4>
+        {% assign tag_index = ""%}
+        {% for tag in site.tags %}
+        <a href="/tags.html#{{tag_index}}"><span class="label label-{% cycle 'default', 'primary', 'success', 'info', 'warning', 'danger' %}">{{tag[0] | xml_escape}}</span></a>{% capture tag_index%}{{forloop.index}}-ref{%endcapture%}
+        {% endfor %}
+    </div>
+
+    <div class="sidebar-module">
+        <h4>{{site.data.i18n['archive']}}</h4>
+        <ol class="list-unstyled">
+            {% assign count = 0 %}
+            {% assign url = "#" %}
+            {% for post in site.posts %}
+            {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+            {% capture this_month %}{{ post.date | date: "%m" }}{% endcapture %}
+            {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
+            {% capture next_month %}{{ post.previous.date | date: "%m" }}{% endcapture %}
+            {% capture count %}{{count | plus:1}}{% endcapture %}
+
+            {% if forloop.first %}
+            {% capture url%}{{ post.url }}{% endcapture %}
+            {% endif %}
+            {% if this_year != next_year or this_month != next_month %}
+            <li><a href="{{ url }}">{{ this_year }} {{ this_month }}({{count}})</a></li>
+            {% assign count = 0 %}
+            {% capture url %}{{post.previous.url}}{% endcapture %}
+            {% endif %}
+
+            {% endfor %}
+            {% assign url = null %}
+            {% assign count = null %}
+        </ol>
+    </div>
+
+    {% if site.data.info.out_links.size > 0 %}
+    <div class="sidebar-module">
+        <h4>{{ site.data.i18n['out_links']}}</h4>
+        <ol class="list-unstyled">
+            {% for link in site.data.info.out_links %}
+            {% assign _string_id = link[1]%}
+            {% include function/i18n %}
+            <li><a href="{{link[0]}}" target="_blank">{{__string_value}}</a></li>
+            {% endfor%}
+        </ol>
+    </div>
+    {% endif %}
+</div>
+<!-- sidebar -->

@@ -1,0 +1,28 @@
+---
+layout: nil
+title : Atom Feed
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>{{ site.data.info.title | xml_escape}}</title>
+ <link href="{{ site.data.info.production_url }}{{ page.url }}" rel="self"/>
+ <link href="{{ site.data.info.production_url }}"/>
+ <updated>{{ site.time | date_to_xmlschema }}</updated>
+ <id>{{ site.data.info.production_url }}</id>
+ <author>
+	 <name>{{ site.data.info.author.name | xml_escape }}</name>
+   <email>{{ site.data.info.author.email |xml_escape }}</email>
+ </author>
+
+ {% for post in site.posts %}
+ <entry>
+   <title>{{ post.title |xml_escape}}</title>
+   <link href="{{ site.data.info.production_url }}{{ post.url }}"/>
+   <updated>{{ post.date | date_to_xmlschema }}</updated>
+   <id>{{ site.data.info.production_url }}{{ post.id }}</id>
+   <content type="html">{{ post.content | xml_escape }}</content>
+ </entry>
+ {% endfor %}
+ 
+</feed>

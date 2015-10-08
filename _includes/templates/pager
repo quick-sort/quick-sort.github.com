@@ -1,0 +1,15 @@
+<div>
+<ul class="pager">
+	{% if page.next != null %}
+	<li><a href="{{ page.next.url }}" title="{{page.next.title}}">{{site.data.i18n['previous']}}</a></li>
+	{% else %}
+	<li class="disabled"><a href="{{ page.next.url }}" title="{{page.next.title}}">{{site.data.i18n['previous']}}</a></li>
+	{% endif %}
+
+	{% if page.previous != null %}
+	<li><a href="{{ page.previous.url }}" title="{{page.previous.title}}">{{site.data.i18n['next']}}</a></li>
+	{% else %}
+	<li class="disabled"><a href="{{ page.previous.url }}" title="{{page.previous.title}}">{{site.data.i18n['next']}}</a></li>
+	{% endif %}
+</ul>
+</div>

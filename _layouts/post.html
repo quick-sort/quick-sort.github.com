@@ -1,0 +1,23 @@
+---
+layout: blog
+---
+<h1 class="page-header">{{ page.title }}
+	<br>
+	{% assign _date = page.date %}
+	{% assign _author = page.author%}
+	{% include templates/date_author_label %}
+</h1>
+<div class="lead">
+{{ content }}
+</div>
+
+{% assign _p = page %}
+<div class="row">
+	<div class="col-md-6">
+		{% include templates/post_tags %}
+	</div>
+	<div class="col-md-4 col-md-offset-2">
+		{% include plugins/sharing %}
+	</div>
+</div>
+{% include templates/pager %}

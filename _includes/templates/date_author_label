@@ -1,0 +1,10 @@
+<span class="label label-info font-h6">
+	<date class="date-pub" title="{{ _date | date_to_xmlschema }}" datetime="{{ _date | date_to_xmlschema }}" pubdate>
+	<span class="month"><abbr>{{ _date | date: '%B' }}</abbr></span>
+	<span class="day">{{ _date | date: '%d' }}</span>
+	<span class="year">{{ _date | date: '%Y' }}</span>
+	</date>
+	{% if _author != null %}
+		by {{ _author }}
+	{% endif %}
+</span>

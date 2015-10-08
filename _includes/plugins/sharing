@@ -1,0 +1,11 @@
+{% if site.data.plugins.sharing.provider %}
+	{% case site.data.plugins.sharing.provider %}
+		{% when "jiathis" %}
+			{% assign _provider = site.data.plugins.sharing.jiathis %}
+ 			{% include plugins/sharing_providers/jiathis %}
+		{% when "baidu" %}
+			{% assign _provider = site.data.plugins.sharing.baidu %}
+ 			{% include plugins/sharing_providers/baidu %}
+
+	{% endcase %}
+{% endif %}

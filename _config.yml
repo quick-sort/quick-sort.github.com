@@ -1,0 +1,12 @@
+exclude: [.git]
+markdown: redcarpet
+pygments: true
+paginate: 5
+paginate_path: "page:num"
+paginator_prefix: "/page"
+timezone: "Asia/Shanghai"
+redcarpet:
+  extensions: [fenced_code_blocks]
+image_prefix: "/assets/images/"
+css_prefix: "/assets/css/"
+js_prefix: "/assets/js/"

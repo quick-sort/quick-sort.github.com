@@ -1,0 +1,7 @@
+<form class="navbar-form navbar-right" role="form" action="https://www.google.com.hk/search" target="_blank">
+	<div class="form-group">
+	<input type="text" class="form-control" placeholder="{{site.data.i18n['keyword']}}" name="query" autocomplete="off">
+	<input type="hidden" value="{{site.data.info.production_url}}" name="as_sitesearch"> 
+	</div>
+	<button class="btn btn-default" type="submit">{{site.data.i18n['search']}}</button>
+</form>

@@ -1,0 +1,61 @@
+/* Sidebar modules for boxing content */
+img {
+	width:100%;
+}
+.sidebar-module {
+	padding: 15px;
+	margin: 0 -15px 15px;
+}
+.sidebar-module-inset {
+	padding: 15px;
+	background-color: #f5f5f5;
+	border-radius: 4px;
+}
+.sidebar-module-inset p:last-child,
+.sidebar-module-inset ul:last-child,
+.sidebar-module-inset ol:last-child {
+	margin-bottom: 0;
+}
+.blue-bg {
+	background: #2e7bcf url(/assets/images/header-bg.jpg) 0 0 repeat-x;
+}
+.blue-bg a {
+	color: #fff;
+}
+.blue-bg a:hover {
+	color: #2e7bcf;
+}
+.main-page {
+	margin-top:70px;
+}
+ul.nav > li.active {
+	background-color: #f5f5f5;
+
+}
+li.active > a {
+	color: #2e7bcf;
+}
+.font-h6 {
+	font-size:12px;
+}
+.font-h5 {
+	font-size:14px;
+}
+.font-h4 {
+	font-size:18px;
+}
+.font-h3 {
+	font-size:24px;
+}
+.font-h2 {
+	font-size: 30px;
+}
+.font-h1 {
+	font-size: 36px;
+}
+.navbar-toggle .icon-bar {
+	background-color: #f5f5f5;
+}
+a.navbar-brand:hover{
+	color:#f5f5f5;
+}

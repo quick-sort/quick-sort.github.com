@@ -1,0 +1,50 @@
+{% if paginator %}
+<div>
+<ul class="pagination">
+	{% if paginator.previous_page != null %}
+		{% if paginator.page == 2%}
+			<li><a href="/">&laquo;</a></li>
+		{% else %}
+			<li><a href="{{site.paginator_prefix}}{{ paginator.previous_page }}" title="page{{paginator.previous_page}}">&laquo;</a></li>
+		{% endif %}
+	{% else %}
+	<li class="disabled"><a href="#">&laquo;</a></li>
+	{% endif %}
+
+	{% if paginator.page == null or 3 > paginator.page %}
+		{% assign start = 1 %}
+		{% assign end = 5 %}
+	{% else %}
+		{% assign start = paginator.page | minus: 2%}
+		{% assign end = start | plus:5 %}
+	{% endif %}
+
+	{% if end > paginator.total_pages %}
+		{% assign end = paginator.total_pages %}
+	{% endif %}
+
+	{% for i in (start...end)%}
+		{% if paginator.page == i %}
+		 	{% if i == 1%}
+			<li class="active"><a href="/">{{i}}<span class="sr-only">(current)</span></a></li>
+			{% else %}
+			<li class="active"><a href="{{site.paginator_prefix}}{{i}}">{{i}}</a></li>
+		 	{% endif %}
+		{% else %}
+			{% if i == 1%}
+			<li><a href="/">{{i}}<span class="sr-only">(current)</span></a></li>
+			{% else %}
+			<li><a href="{{site.paginator_prefix}}{{i}}">{{i}}</a></li>
+		 	{% endif %}
+		{% endif %}
+	{% endfor %}
+
+	{% if paginator.next_page != null %}
+	<li><a href="{{site.paginator_prefix}}{{ paginator.next_page }}" title="page{{paginator.next_page}}">&raquo;</a></li>
+	{% else %}
+	<li class="disabled"><a href="#">&raquo;</a></li>
+	{% endif %}
+</ul>
+</div>
+{% endif %}
+

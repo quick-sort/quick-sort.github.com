@@ -1,0 +1,12 @@
+{% capture i18n_cache %}
+{% for text in site.data.i18n %}
+	{% if text[0] == _string_id %}
+		{% assign __string_value = text[1] %}
+		{% break %}
+	{% endif %}
+	{% if forloop.last %}
+		{% assign __string_value = _string_id %}
+	{% endif %}
+{% endfor %}
+{%endcapture%}
+{% assign i18n_cache = nil %}

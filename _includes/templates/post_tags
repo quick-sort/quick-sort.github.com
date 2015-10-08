@@ -1,0 +1,8 @@
+{% if _p.tags.size > 0 %}
+<div>
+	<span>{{site.data.i18n['tag']}}:</span>
+	{% for tag in _p.tags%}
+	<span class="label label-{% cycle 'default', 'primary', 'success', 'info', 'warning', 'danger' %}">{{tag}}</span>
+	{% endfor %}
+</div>
+{% endif %}

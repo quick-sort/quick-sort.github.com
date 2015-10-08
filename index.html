@@ -1,0 +1,9 @@
+---
+layout: blog
+---
+{% for post in paginator.posts %}
+	{% assign _p = post%}
+	{% include templates/post_excerpt%}
+{% endfor %}
+
+{% include templates/pagination %}

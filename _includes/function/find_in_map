@@ -1,0 +1,12 @@
+{% capture find_in_map_cache %}
+	{% for i in _map %}
+		{% if i[0] == _key %}
+			{% assign __value = i[1] %}
+			{% break %}
+		{% endif %}
+		{% if forloop.last %}
+			{% assign __value = nil %}
+		{% endif %}
+	{% endfor %}
+{% endcapture %}
+{% assign find_in_map_cache = nil%}
