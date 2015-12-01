@@ -3,7 +3,7 @@ analytics:
   provider: baidu
   google: 
     tracking_id: 'UA-42967195-1'
-    hostname: 'quicksort.cn'
+    hostname: 'blog.quicksort.cn'
   baidu:
     tracking_id: 0c52acbdb7936e8f3c910e4190050a18
 oauth: 
